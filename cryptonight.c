@@ -24,7 +24,6 @@
 
 #define VARIANT1_1(p) \
 if (variant > 1) { \
-{ \
 const uint8_t tmp = ((const uint8_t*)(p))[11]; \
 static const uint32_t table = 0x75312; \
 const uint8_t index = (((tmp >> 4) & 6) | (tmp & 1)) << 1; \
