@@ -23,13 +23,17 @@
 #define INIT_SIZE_BYTE (INIT_SIZE_BLK * AES_BLOCK_SIZE)
 
 #define VARIANT1_1(p) \
-  do if (variant > 0) \
-  { \
-    const uint8_t tmp = ((const uint8_t*)(p))[11]; \
-    static const uint32_t table = 0x75310; \
-    const uint8_t index = (((tmp >> 3) & 6) | (tmp & 1)) << 1; \
-    ((uint8_t*)(p))[11] = tmp ^ ((table >> index) & 0x30); \
-  } while(0)
+if (VARIANT > 1) { \
+        const uint8_t tmp = reinterpret_cast<const uint8_t*>(p)[11]; \
+        static const uint32_t table = 0x75312; \
+        const uint8_t index = (((tmp >> 4) & 6) | (tmp & 1)) << 1; \
+        ((uint8_t*)(p))[11] = tmp ^ ((table >> index) & 0x30); \
+} else { \
+        const uint8_t tmp = reinterpret_cast<const uint8_t*>(p)[11]; \
+        static const uint32_t table = 0x75310; \
+        const uint8_t index = (((tmp >> 3) & 6) | (tmp & 1)) << 1; \
+        ((uint8_t*)(p))[11] = tmp ^ ((table >> index) & 0x30); \
+}
 
 #define VARIANT1_2(p) \
    do if (variant > 0) \
